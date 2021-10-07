@@ -9,6 +9,10 @@ cluster:
 	$(clean_command)
 	kind create cluster
 
+cluster-down:
+	$(clean_command)
+	kind delete clsuter
+
 # deploy kubernetes resources
 deploy:
 	$(clean_command)
@@ -18,10 +22,7 @@ deploy:
 	kubectl apply -f kubernetes/nginx-cm.yaml
 	kubectl apply -f kubernetes/nginx-deployment.yaml
 
-down:
-	$(clean_command)
-	kind delete cluster
-	vagrant destroy -f
+down: vagrant-down cluster-down
 
 # build the servers defined in the vagrant file 
 servers:
@@ -33,11 +34,10 @@ ssh-config:
 	$(clean_command)
 	vagrant ssh-config >> ~/.ssh/config
 
-up:
+up: servers ssh-config cluster deploy
+
+vagrant-down:
 	$(clean_command)
-	servers
-	ssh-config
-	cluster
-	deploy
+	vagrant destroy -f
 # --------------------------------------------------------------------------- #
 #EOF
