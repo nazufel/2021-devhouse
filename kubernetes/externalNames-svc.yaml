@@ -1,0 +1,13 @@
+# externalNames-svc.yaml
+
+# create external names to reference the external db server
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app01
+  namespace: devhouse
+spec:
+  type: ExternalName
+  externalName: 192.168.33.11
+#EOF
