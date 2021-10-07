@@ -18,6 +18,11 @@ deploy:
 	kubectl apply -f kubernetes/nginx-cm.yaml
 	kubectl apply -f kubernetes/nginx-deployment.yaml
 
+down:
+	$(clean_command)
+	kind delete cluster
+	vagrant destroy -f
+
 # build the servers defined in the vagrant file 
 servers:
 	$(clean_command)
@@ -28,5 +33,11 @@ ssh-config:
 	$(clean_command)
 	vagrant ssh-config >> ~/.ssh/config
 
+up:
+	$(clean_command)
+	servers
+	ssh-config
+	cluster
+	deploy
 # --------------------------------------------------------------------------- #
 #EOF
