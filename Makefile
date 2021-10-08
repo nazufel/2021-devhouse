@@ -14,7 +14,7 @@ cluster:
 
 cluster-down:
 	$(clean_command)
-	kind delete clsuter
+	kind delete cluster
 
 # deploy kubernetes resources
 deploy:
