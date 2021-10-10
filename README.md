@@ -9,7 +9,7 @@ That's not all though. There are some final configurations needed to be done to 
 1. make sure all of the metallb pods are in a *running* state: `kubectl get pods -n metallb-system`
 2. inspect the docker network it set up `docker network inspect -f '{{.IPAM.Config}}' kind`
 3. add that IP address range to the to the [metallb-cm.yaml](./kubernetes/metallb-cm.yaml)
-4. save the lb ip to the shell `set -x LB_IP (kubectl get svc/nginx -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')`
+4. save the lb ip to the shell `set -x lb (kubectl get svc/nginx -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')`
 5. now curl to access nginx `curl $LB_IP:8888`
 
 

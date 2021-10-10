@@ -8,6 +8,21 @@ metadata:
   name: app01
   namespace: devhouse
 spec:
-  type: ExternalName
-  externalName: 192.168.33.11
+  ports:
+    - name: "app01"
+      protocol: "TCP"
+      port: 22
+      targetPort: 22
+      nodePort: 0
+
+---
+kind: "Endpoints"
+apiVersion: "v1"
+metadata:
+  name: "app01" 
+  namespace: devhouse
+subsets: 
+  - addresses:
+      - ip: "192.168.33.11" 
+
 #EOF
