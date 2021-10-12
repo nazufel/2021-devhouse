@@ -1,5 +1,8 @@
 # default.yaml
 
+# file to hold role-scoped variables
+
+# --------------------------------------------------------------------------- #
 web_server: "nginx"
 web_server_version: "1.18.0-0ubuntu1.2"
 #EOF

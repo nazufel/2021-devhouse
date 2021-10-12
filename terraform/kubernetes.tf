@@ -1,12 +1,14 @@
 # kubernetes.tf
 
+# file to create a GKE cluster and node pools
+
+# --------------------------------------------------------------------------- #
+
+# create a GKE cluster
 resource "google_container_cluster" "devhouse" {
   name     = "devhouse"
   location = var.DEVHOUSE_2021_GCP_REGION
 
-  # We can't create a cluster with no node pool defined, but we want to only use
-  # separately managed node pools. So we create the smallest possible default
-  # node pool and immediately delete it.
   remove_default_node_pool = true
   initial_node_count       = 1
   network                  = google_compute_network.devhouse.self_link
@@ -19,6 +21,7 @@ resource "google_container_cluster" "devhouse" {
   ]
 }
 
+# create a node pool for the above cluster
 resource "google_container_node_pool" "devhouse" {
   name       = "devhouse"
   location   = var.DEVHOUSE_2021_GCP_REGION
@@ -39,3 +42,4 @@ resource "google_container_node_pool" "devhouse" {
   ]
 
 }
+#EOF

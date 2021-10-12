@@ -1,5 +1,10 @@
 # app_servers.tf
 
+# create app servers
+
+# --------------------------------------------------------------------------- #
+
+# define variables that are local to the module
 locals {
   boot_disk_size = 250
   boot_disk_type = "pd-ssd"
@@ -18,13 +23,14 @@ sudo apt-get install -y python3.8
 EOF
 }
 
-
+# create a service account for the app servers
 resource "google_service_account" "devhouse" {
   project = var.DEVHOUSE_2021_GCP_PROJECT
   account_id   = "devhouse"
   display_name = "Devhouse Service Account"
 }
 
+# create a GCP instance for an app server
 resource "google_compute_instance" "app_01" {
   name         = "app-01"
   machine_type = "e2-medium"
@@ -76,6 +82,7 @@ resource "google_compute_instance" "app_01" {
   ]
 }
 
+# create a DNS entry for the app server
 resource "google_dns_record_set" "app_01" {
   name    = format("${google_compute_instance.app_01.name}.%s", google_dns_managed_zone.devhouse_private_zone.dns_name)
   project = var.DEVHOUSE_2021_GCP_PROJECT
@@ -90,3 +97,4 @@ resource "google_dns_record_set" "app_01" {
     google_compute_instance.app_01
   ]
 }
+#EOF

@@ -1,3 +1,10 @@
+# inventory.yaml
+
+# file to hold the inventory of hosts to orchestrate
+
+# --------------------------------------------------------------------------- #
+
+
 all:
   children:
     app_servers:
@@ -8,3 +15,4 @@ all:
   vars:
     ansible_python_interpreter: "/usr/bin/python3"
     ansible_ssh_private_key_file: "{{ playbook_dir }}/ssh_key"
+#EOF

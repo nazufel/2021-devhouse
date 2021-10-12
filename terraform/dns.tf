@@ -1,5 +1,10 @@
 # dns.tf
 
+# file to creat dns zones
+
+# --------------------------------------------------------------------------- #
+
+# create a devhouse.systems private DNS zone
 resource "google_dns_managed_zone" "devhouse_private_zone" {
   name        = "devhouse-systems"
   dns_name    = "devhouse.systems."
@@ -19,3 +24,4 @@ resource "google_dns_managed_zone" "devhouse_private_zone" {
     google_compute_network.devhouse
   ]
 }
+#EOF

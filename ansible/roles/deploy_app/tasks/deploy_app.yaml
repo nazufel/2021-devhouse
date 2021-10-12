@@ -1,5 +1,8 @@
 # deploy_app.yaml
 
+# file to hold tasks to deploy the app
+
+# --------------------------------------------------------------------------- #
 
 - name: "template app file"
   ansible.builtin.template:

@@ -4,18 +4,13 @@
 
 # --------------------------------------------------------------------------- #
 
-###############################################################################
-###                             NETWORKS                                    ###
-###############################################################################
+# create a network in GCP
 resource "google_compute_network" "devhouse" {
   name                    = "devhouse"
   auto_create_subnetworks = false
 }
 
-###############################################################################
-###                              SUBETS                                     ###
-###############################################################################
-
+# create a subnet for kubernetes
 resource "google_compute_subnetwork" "kubernetes" {
   name          = "kubernetes"
   project       = var.DEVHOUSE_2021_GCP_PROJECT
@@ -27,7 +22,7 @@ resource "google_compute_subnetwork" "kubernetes" {
   ]
 }
 
-
+# create a subnet for app servers
 resource "google_compute_subnetwork" "app_servers" {
   name          = "servers"
   ip_cidr_range = "10.20.0.0/24"
@@ -37,9 +32,7 @@ resource "google_compute_subnetwork" "app_servers" {
   ]
 }
 
-### Cloud Router ###
-
-# Central
+# create a cloud router
 resource "google_compute_router" "router" {
   name    = "router"
   network = google_compute_network.devhouse.self_link
@@ -48,8 +41,7 @@ resource "google_compute_router" "router" {
   ]
 }
 
-### NAT ###
-
+# create cloud nat
 module "cloud-nat" {
   source     = "terraform-google-modules/cloud-nat/google"
   version    = "~> 1.2"
@@ -62,6 +54,7 @@ module "cloud-nat" {
   ]
 }
 
+# create firewall rules for the gcp network
 resource "google_compute_firewall" "app_servers" {
   name     = "app-servers"
   project  = var.DEVHOUSE_2021_GCP_PROJECT
@@ -95,3 +88,4 @@ resource "google_compute_firewall" "app_servers" {
     google_compute_network.devhouse
   ]
 }
+#EOF

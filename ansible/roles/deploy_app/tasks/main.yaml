@@ -1,5 +1,9 @@
 # main.yaml
 
+# main file bootstraps the rest of the role
+
+# --------------------------------------------------------------------------- #
+
 - include: install_web_server.yaml
 - include: deploy_app.yaml
 #EOF

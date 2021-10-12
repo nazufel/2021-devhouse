@@ -1,5 +1,8 @@
 # deploy_app.yaml
 
+# playbook file to hold plays for deploying the app
+
+# --------------------------------------------------------------------------- #
 - name: "deploy app"
   hosts: all
   gather_facts: true
@@ -10,3 +13,4 @@
   roles:
     - name: "deploy_app"
       become: true
+#EOF
