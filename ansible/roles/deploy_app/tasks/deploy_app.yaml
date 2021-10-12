@@ -1,9 +1,11 @@
 # deploy_app.yaml
 
 
-- name: "copy app file"
+- name: "template app file"
   ansible.builtin.template:
     src: "index.j2"
-    dest: ""
-
+    dest: "/var/www/html/index.nginx-debian.html"
+    owner: "root"
+    group: "root"
+    mode: 0644
 #EOF

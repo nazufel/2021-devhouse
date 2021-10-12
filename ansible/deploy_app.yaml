@@ -5,7 +5,7 @@
   gather_facts: true
 
   vars: 
-    app_version: 1
+    app_version: 2
 
   roles:
     - name: "deploy_app"
