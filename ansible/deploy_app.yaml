@@ -1,0 +1,12 @@
+# deploy_app.yaml
+
+- name: "deploy app"
+  hosts: all
+  gather_facts: true
+
+  vars: 
+    app_version: 1
+
+  roles:
+    - name: "deploy_app"
+      become: true

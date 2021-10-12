@@ -1,0 +1,22 @@
+# install_web_server.yaml
+
+- name: "update cache"
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: "update the server"
+  ansible.builtin.apt:
+    name: "*"
+    state: "latest"
+
+- name: "install web server"
+  ansible.builtin.apt:
+    name: "{{ web_server }}={{web_server_version }}"
+    state: "present"
+
+- name: "enable and start web server with systemd"
+  ansible.builtin.systemd:
+    name: "{{ web_server }}"
+    enabled: true
+    state: "started"    
+#EOF

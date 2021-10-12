@@ -4,3 +4,5 @@
 *.tfstate*
 
 kubeconfig
+
+ssh_key
