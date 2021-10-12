@@ -1,4 +1,6 @@
 .terraform
 
 *.hcl
-*.tfstate
+*.tfstate*
+
+kubeconfig

@@ -25,14 +25,13 @@ resource "google_service_account" "devhouse" {
   display_name = "Devhouse Service Account"
 }
 
-resource "google_compute_instance" "app_server" {
+resource "google_compute_instance" "app_server_01" {
   name         = "devhouse-app-server"
   machine_type = "e2-medium"
   zone         = "${var.DEVHOUSE_2021_GCP_REGION}-a"
 
   tags = [
     "devhouse", 
-    "2021", 
     "app-server",
     "demo"
   ]
@@ -67,4 +66,26 @@ resource "google_compute_instance" "app_server" {
     email  = google_service_account.devhouse.email
     scopes = ["cloud-platform"]
   }
+
+    depends_on = [
+    google_dns_managed_zone.devhouse_private_zone,
+    google_compute_network.devhouse,
+    google_compute_subnetwork.app_servers,
+    google_service_account.devhouse
+  ]
+}
+
+resource "google_dns_record_set" "app_server_01" {
+  name    = format("${google_compute_instance.app_server_01.name}.%s", google_dns_managed_zone.devhouse_private_zone.dns_name)
+  project = var.DEVHOUSE_2021_GCP_PROJECT
+  type    = "A"
+  # 30 second TTL
+  ttl          = 30
+  managed_zone = google_dns_managed_zone.devhouse_private_zone.name
+  rrdatas      = [google_compute_instance.app_server_01.network_interface.0.network_ip]
+
+  depends_on = [
+    google_dns_managed_zone.devhouse_private_zone,
+    google_compute_instance.app_server_01
+  ]
 }

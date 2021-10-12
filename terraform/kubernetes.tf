@@ -11,6 +11,12 @@ resource "google_container_cluster" "devhouse" {
   initial_node_count       = 1
   network                  = google_compute_network.devhouse.self_link
   subnetwork               = google_compute_subnetwork.kubernetes.self_link
+
+  depends_on = [
+    google_dns_managed_zone.devhouse_private_zone,
+    google_compute_network.devhouse,
+    google_compute_subnetwork.kubernetes,
+  ]
 }
 
 resource "google_container_node_pool" "devhouse" {
@@ -24,5 +30,12 @@ resource "google_container_node_pool" "devhouse" {
     machine_type = "e2-medium"
 
   }
+
+  depends_on = [
+    google_dns_managed_zone.devhouse_private_zone,
+    google_compute_network.devhouse,
+    google_compute_subnetwork.kubernetes,
+    google_container_cluster.devhouse
+  ]
 
 }
